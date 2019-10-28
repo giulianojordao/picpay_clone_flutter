@@ -1,16 +1,12 @@
 # picpay_clone_flutter
 
-A new Flutter project.
+Projeto criado para testar meus skills, reproduzindo a UI do app PicPay.
 
-## Getting Started
+Para mais detalhes sobre o projeto, escrevo sobre a criação do clone e mostro commit a commit o avanço que o app foi recebendo.
+[Clone do app PicPay usando Flutter](https://leonardobenedeti.github.io/picpay-clone-using-flutter)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Também comentei por lá, mas tenho uma lista de ajustes para quando tiver um tempo a mais sobrando, como:
+- [ ] Melhorar os blocs para pegar as infos na tela
+- [ ] Incluir uma consulta em algum backend para trazer as informações e não usar localmente
+- [ ] Incluir a tabbar do app e quem sabe as outras páginas
+- [ ] Criar um package para o leitor de qrcode customizado e inserir no app
