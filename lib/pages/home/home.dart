@@ -11,9 +11,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  
-  MyHomePageBloc bloc = MyHomePageBloc();
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,107 +18,111 @@ class _MyHomePageState extends State<MyHomePage> {
       child: SafeArea(
         bottom: false,
         child: Scaffold(
-          body: DefaultTabController(
-              length: 2,
-              child: CustomScrollView(
-                physics: ClampingScrollPhysics(),
-                slivers: <Widget>[
-                  SliverAppBar(
-                    expandedHeight: 40.0,
-                    backgroundColor: Theme.of(context).backgroundColor,
-                    leading: Padding(
-                      padding: const EdgeInsets.all(13.0),
-                      child: Image.asset("assets/icon-qrcode.png"),
-                    ),
-                    actions: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(13.0),
-                        child: Image.asset("assets/add-icon.png"),
-                      )
-                    ],
-                    pinned: false,
-                    elevation: 0.0,
-                    forceElevated: true,
-                    floating: false,
-                    flexibleSpace: Container(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          height: 40.0,
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                "Meu saldo",
-                                style: TextStyle(
-                                  color: Colors.grey[800],
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                "R\$ 35,02",
-                                style: TextStyle(
-                                  color: Colors.grey[800],
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ),
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Sugestões para você",
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            height: 120.0,
-                            padding: EdgeInsets.only(bottom: 8),
-                            child: _listUsers(),
-                          ),
-                        ],
-                      ),
-                    )
-                  ),
-                  SliverPersistentHeader(
-                    pinned: true,
-                    delegate: Tabs(50.0),
-                  ),
-                  SliverFillRemaining(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: _tabView(),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
+          body: _body(context)
+        ),
       ),
     );
   }
+}
+
+Widget _body(context){
+  return DefaultTabController(
+    length: 2,
+    child: CustomScrollView(
+      physics: ClampingScrollPhysics(),
+      slivers: <Widget>[
+        SliverAppBar(
+          expandedHeight: 40.0,
+          backgroundColor: Theme.of(context).backgroundColor,
+          leading: Padding(
+            padding: const EdgeInsets.all(13.0),
+            child: Image.asset("assets/icon-qrcode.png"),
+          ),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(13.0),
+              child: Image.asset("assets/add-icon.png"),
+            )
+          ],
+          pinned: false,
+          elevation: 0.0,
+          forceElevated: true,
+          floating: false,
+          flexibleSpace: Container(
+            child: Align(
+              alignment: Alignment.center,
+              child: Container(
+                height: 40.0,
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      "Meu saldo",
+                      style: TextStyle(
+                        color: Colors.grey[800],
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "R\$ 35,02",
+                      style: TextStyle(
+                        color: Colors.grey[800],
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Sugestões para você",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  height: 120.0,
+                  padding: EdgeInsets.only(bottom: 8),
+                  child: _listUsers(),
+                ),
+              ],
+            ),
+          )
+        ),
+        SliverPersistentHeader(
+          pinned: true,
+          delegate: Tabs(50.0),
+        ),
+        SliverFillRemaining(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: _tabView(),
+          ),
+        )
+      ],
+    ),
+  );
 }
 
 class Tabs extends SliverPersistentHeaderDelegate {
@@ -130,8 +131,11 @@ class Tabs extends SliverPersistentHeaderDelegate {
   Tabs(this.size);
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+
+    MyHomePageBloc bloc = MyHomePageBloc();
+    bloc.scrollTabs = shrinkOffset >= 48.0;
+
     return Container(
       color: Theme.of(context).backgroundColor,
       height: size,
@@ -203,7 +207,9 @@ List activities = [
 ];
 
 Widget _listActivities(){
+  MyHomePageBloc bloc = MyHomePageBloc();
   return ListView.builder(
+    physics: bloc.scrollTabs ? ClampingScrollPhysics() : NeverScrollableScrollPhysics(),
     itemBuilder: (context, position){
       return _cardItem(activities[position], context);
     },
